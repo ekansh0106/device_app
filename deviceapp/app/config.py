@@ -1,0 +1,1 @@
+PDF_PATH="/path/to/deviceapp"

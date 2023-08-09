@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Device App</title>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px
+      }
+      th{
+        background:#333333;
+        color:white
+      }
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      .side:hover{
+        color:white !important;
+      }
+      tr:hover:nth-child(even){
+        background: #f2f2f2 ;
+      }
+      .btn:hover{
+        background: #595959 !important;
+      }
+      </style>
+      <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
+  </head>
+
+  <body style="background-color: #def5ff;">
+    <nav
+      class="sidebar"
+      style="
+        background-color: black;
+        color: aliceblue;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 160px;
+        border: 4px solid #595959
+      "
+    >
+          <a style="padding: 60px 8px 6px 20px;
+          text-decoration: none;
+          font-size: 25px;
+          color: #b1b0b0;
+          display: block;"
+           href="#" class="text side">Dashboard</a>
+           <a style="padding: 30px 8px 6px 20px;
+          text-decoration: none;
+          font-size: 25px;
+          color: #b1b0b0;
+          display: block"
+           href="/logout" class="text side">Logout</a>
+        
+      </ul>
+    </nav>
+    <div style="overflow:auto;margin: 40px;margin-left: 200px  ;padding: 20px; background-color: rgb(255, 255, 255); height: 500px;">
+      <form method="post">
+      <div style="display: flex;">
+        <p style="margin-left: 22px;margin-bottom:-3px">Choose Deviceid</p>
+        <p style="margin-left: 200px;margin-bottom:-3px">From</p>
+        <p style="margin-left: 175px;margin-bottom:-3px">To</p>
+      </div>
+      <div>
+      <select required style="margin-left:20px;margin-right: 50px; height:30px; width:250px" type="text" id="deviceid" name="deviceid" placeholder="Enter deviceid">
+        <option></option>
+        {% for i in devices %}
+        <option>{{i[0]}}</option>
+        {% endfor %}
+      </select>
+      <input style="margin-right: 50px; height:30px;width:150px" type="date" id="from" name="from"> 
+      <input style="margin-right: 50px; height:30px;width:150px" type="date" id="to" name="to"><br/>
+      <button formaction="/search-by-deviceid" style="border-radius:10px;background:#333333;color:white;width:100px;margin-top:20px;margin-left:20px;margin-right: 20px; height:30px" class="btn">View</button>
+      <button formaction="/return-pdf" style="border-radius:10px;background:#333333;color:white;width:100px;margin-top:20px;margin-right: 50px; height:30px;" class="btn">Download Pdf</button><br>
+    </form>
+    {% if deviceid %}
+      <p style="margin-top:40px"><b>Deviceid : {{deviceid[0].deviceid}}</b></p>
+
+      {% if from_date and to_date %}
+      <p>From {{from_date}} - To {{to_date}}</p>
+      {% elif from_date%}
+      <p>For - {{from_date}}</p>
+      {% endif %}
+      <p>Queried number of rows available : <b>{{deviceid|length}}</b></p>
+      <table>
+        <th>timestamp</th>
+        <th>data1</th>
+        <th>data2</th>
+        <th>data3</th>
+        <th>data4</th>
+        <th>data5</th>
+        {% for d in deviceid%}
+        <tr>
+          <td>{{d.dt_start.strftime('%Y-%m-%d %I:%M:%S %p')}}</td>
+          <td>{{d.data1}}</td>
+          <td>{{d.data2}}</td>
+          <td>{{d.data3}}</td>
+          <td>{{d.data4}}</td>
+          <td>{{d.data5}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% endif %}
+    <p>{{error}}</p>
+    </div>
+    </div>
+  </body>
+</html>

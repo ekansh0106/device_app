@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <style>
+      #btn:hover {
+        background: #595959 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="/dashboard" method="post">
+      <div
+        class="login"
+        style="
+          border: 3px solid black;
+          display: grid;
+          place-items: center;
+          margin: 10%;
+          margin-left: 30%;
+          margin-right: 30%;
+          padding: 30px;
+        "
+      >
+        <img src="/static/logo.png" alt="" srcset="" style="height: 60px" />
+        <h2>Device App</h2>
+        <input
+          required
+          name="username"
+          style="width: 250px; height: 30px; font-size: medium"
+          type="text"
+          id="username"
+          placeholder="Username"
+        /><br />
+        <input
+          required
+          name="password"
+          style="width: 250px; height: 30px; font-size: medium"
+          type="password"
+          id="password"
+          placeholder="Password"
+        /><br />
+        <button
+          style="
+            background: #333333;
+            color: white;
+            border-radius: 10px;
+            width: 100px;
+            height: 30px;
+          "
+          type="submit"
+          id="btn"
+        >
+          Login
+        </button>
+        {% if error %}
+        <p>{{error}}</p>
+        {% endif %}
+      </div>
+    </form>
+  </body>
+</html>
